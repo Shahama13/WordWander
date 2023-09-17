@@ -1,4 +1,5 @@
-import { Container, Stack, Button, Typography } from "@mui/material";
+import { Container, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const languages: langCodes[] = [
   {
@@ -42,9 +43,22 @@ const Home = () => {
         justifyContent={"center"}
       >
         {languages.map((l) => (
-          <Button href={`/learn?language=${l.code}`} variant="outlined" key={l.code}>
-            {l.name}
-          </Button>
+         <Link
+         to={`/learn/${l.code}`}
+         style={{
+           textDecoration: "none",
+           border: "2px solid #1a237e",
+           padding: "2vmax",
+           borderRadius: "15%",
+           color: "#1a237e",
+           display: "inline-block", // Add this line to make it inline
+           margin: "5px", // Add this line for spacing
+         }}
+         key={l.code}
+       >
+         {l.name}
+       </Link>
+       
         ))}
       </Stack>
       <Typography color="secondary" textAlign={"center"}>

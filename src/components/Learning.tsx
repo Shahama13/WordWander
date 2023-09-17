@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container, Stack, Typography, Button } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import { VolumeUp } from "@mui/icons-material";
@@ -17,7 +17,7 @@ const Learning = () => {
   const [count, setCount] = useState<number>(0);
   const [audioSrc, setAudioSrc] = useState<string>("");
 
-  const params = useSearchParams()[0].get("language") as langType;
+  const params = useParams();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Learning = () => {
     if (player) {
       player.play();
     } else {
-      const data = await hearAudio(words[count]?.word, params);
+      const data = await hearAudio(words[count]?.word, params.lang as langType);
       setAudioSrc(data);
     }
   };
@@ -43,8 +43,9 @@ const Learning = () => {
   );
 
   useEffect(() => {
+    console.log(params.lang)
     dispatch(getWordsRequest());
-    translateWords(params)
+    translateWords(params.lang as langType)
       .then((arr) => {
         dispatch(getWordsSuccess(arr as WordType[]));
       })
